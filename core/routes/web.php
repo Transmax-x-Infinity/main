@@ -44,5 +44,8 @@ Route::controller('SiteController')->group(function () {
     Route::get('service-form', 'serviceForm')->name('service.form');
 
     Route::get('/{slug}', 'pages')->name('pages');
-    Route::get('/', 'index')->name('home');
+    // Route::get('/', 'index')->name('home');
+    Route::get('/',function(){
+        return redirect()->intended('/admin');
+    });
 });
