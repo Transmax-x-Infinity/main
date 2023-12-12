@@ -47,5 +47,5 @@ Route::controller('SiteController')->group(function () {
     // Route::get('/', 'index')->name('home');
     Route::get('/',function(){
         return redirect()->intended('/admin');
-    });
+    })->name('home');
 });
