@@ -46,6 +46,6 @@ Route::controller('SiteController')->group(function () {
     Route::get('/{slug}', 'pages')->name('pages');
     // Route::get('/', 'index')->name('home');
     Route::get('/',function(){
-        return redirect()->intended('/admin');
-    });
+        return redirect()->intended('/agent');
+    })->name('home');
 });
