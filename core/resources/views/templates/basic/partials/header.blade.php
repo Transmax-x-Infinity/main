@@ -15,14 +15,16 @@
         <div class="container">
             @if ($class == 'header--primary')
                 <a class="logo logo-dark" href="{{ route('home') }}">
-                    <img alt="{{ __($general->site_name) }}" class="img-fluid logo__is" src="{{ siteLogo("dark") }}" />
+                    <img alt="{{ __($general->site_name) }}" class="img-fluid logo__is" src="{{ siteLogo('dark') }}" />
                 </a>
             @endif
 
             <a class="logo logo-light" href="{{ route('home') }}">
                 <img alt="{{ __($general->site_name) }}" class="img-fluid logo__is" src="{{ siteLogo() }}" />
             </a>
-            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse"
+                type="button">
                 <span class="menu-toggle"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -31,7 +33,8 @@
                         <a class="primary-menu__link" href="{{ route('home') }}">@lang('Home')</a>
                     </li>
                     @foreach ($pages as $k => $data)
-                        <li class="nav-item"><a class="primary-menu__link" href="{{ route('pages', [$data->slug]) }}">{{ __($data->name) }}</a></li>
+                        <li class="nav-item"><a class="primary-menu__link"
+                                href="{{ route('pages', [$data->slug]) }}">{{ __($data->name) }}</a></li>
                     @endforeach
                     <li class="nav-item">
                         <a class="primary-menu__link" href="{{ route('blog') }}">@lang('Blog')</a>
@@ -44,7 +47,8 @@
                             <div class="select-lang">
                                 <select class="select langSel">
                                     @foreach ($language as $item)
-                                        <option @if (session('lang') == $item->code) selected @endif value="{{ $item->code }}">{{ __($item->name) }}
+                                        <option @if (session('lang') == $item->code) selected @endif
+                                            value="{{ $item->code }}">{{ __($item->name) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -53,7 +57,8 @@
                     @endif
                     @guest
                         <li class="nav-item pt-lg-0 pb-lg-0 pt-10 pb-10">
-                            <a class="btn btn--md btn--base fixed-width" href="{{ route('user.login') }}"> @lang('Login')
+                            <a class="btn btn--md btn--base fixed-width" href="{{ route('user.login') }}">
+                                @lang('Login')
                             </a>
                         </li>
                     @endguest

@@ -5,7 +5,9 @@
             <a class="logo logo-light" href="{{ route('home') }}">
                 <img alt="{{ __($general->site_name) }}" class="img-fluid logo__is" src="{{ siteLogo() }}" />
             </a>
-            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse"
+                type="button">
                 <span class="menu-toggle"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -17,8 +19,15 @@
                         <a class="primary-menu__link" href="javascript:void(0)">@lang('Send Money')</a>
                         <ul class="primary-menu__sub">
                             <li class="primary-menu__sub-list">
-                                <a class="t-link primary-menu__sub-link" href="{{ route('user.send.money.now') }}">
-                                    @lang('Send Now')
+                                <a class="t-link primary-menu__sub-link"
+                                    href="{{ route('user.send.money.send', 'local') }}">
+                                    @lang('Send Localy')
+                                </a>
+                            </li>
+                            <li class="primary-menu__sub-list">
+                                <a class="t-link primary-menu__sub-link"
+                                    href="{{ route('user.send.money.send', 'inter') }}">
+                                    @lang('Send Internationaly')
                                 </a>
                             </li>
 
@@ -74,7 +83,8 @@
                             <div class="select-lang">
                                 <select class="form-select langSel">
                                     @foreach ($language as $item)
-                                        <option @if (session('lang') == $item->code) selected @endif value="{{ $item->code }}">{{ __($item->name) }}
+                                        <option @if (session('lang') == $item->code) selected @endif
+                                            value="{{ $item->code }}">{{ __($item->name) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -82,7 +92,8 @@
                         </li>
                     @endif
                     <li class="nav-item pt-lg-0 pb-lg-0 pt-10 pb-10">
-                        <a class="btn btn--md btn--base fixed-width" href="{{ route('user.logout') }}"> @lang('Logout')
+                        <a class="btn btn--md btn--base fixed-width" href="{{ route('user.logout') }}">
+                            @lang('Logout')
                         </a>
                     </li>
 
