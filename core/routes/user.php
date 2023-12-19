@@ -71,6 +71,7 @@ Route::middleware('auth')->name('user.')->group(function () {
             // send money
             Route::middleware('user.kyc:send_money')->controller('SendMoneyController')->prefix('send-money')->name('send.money.')->group(function () {
                 Route::get('send-now', 'sendMoney')->name('now');
+                Route::get('send/{type}', 'sendMoney')->name('send');
                 Route::post('save', 'save')->name('save');
                 Route::get('history', 'history')->name('history');
                 Route::middleware('user.kyc:direct_payment')->group(function () {

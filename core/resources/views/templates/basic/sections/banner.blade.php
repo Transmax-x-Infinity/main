@@ -8,13 +8,15 @@
 @endphp
 
 <!-- Hero  -->
-<section class="hero" style="background-image: url('{{ getImage('assets/images/frontend/banner/' . @$banner->data_values->image, '1800x840') }}')">
+<section class="hero"
+    style="background-image: url('{{ getImage('assets/images/frontend/banner/' . @$banner->data_values->image, '1800x840') }}')">
     <div class="hero__content">
         <div class="container">
             <div class="row gy-5 g-lg-4 align-items-center justify-content-center justify-content-lg-between">
                 <div class="col-lg-7 col-xxl-6 text-lg-start text-center">
                     <h2 class="hero__content-title text-capitalize text--white pt-lg-0 pt-4">
-                        {{ __(@$banner->data_values->heading) }}
+                        {{-- {{ __(@$banner->data_values->heading) }} --}}
+                        @lang($banner->data_values->heading)
                     </h2>
 
                     <p class="hero__content-para text--white ms-lg-0 mx-auto">
@@ -34,22 +36,29 @@
 
                     <div class="exchange-form__header">
                         <span class="exchange-form__sub-title text--white"> @lang('Conversion Rate') </span>
-                        <h5 class="exchange-form__title m-0 text-white">1 <span class="sending-currency"></span> = <span class="exchange-rate">1</span> <span class="recipient-currency"></span></h5>
+                        <h5 class="exchange-form__title m-0 text-white">1 <span class="sending-currency"></span> = <span
+                                class="exchange-rate">1</span> <span class="recipient-currency"></span></h5>
                     </div>
 
                     <div class="exchange-form" style="background-color:black">
-                        <form action="{{ route('currency.calculator') }}" id="calculatorForm" class="row g-0" method="POST">
+                        <form action="{{ route('currency.calculator') }}" id="calculatorForm" class="row g-0"
+                            method="POST">
                             @csrf
                             <div class="col-12">
                                 <div class="exchange-form__body">
                                     <div class="row g-3">
 
-                                        @include($activeTemplate . 'partials.country_fields', ['class' => 'col-12', 'showLimit' => false])
+                                        @include($activeTemplate . 'partials.country_fields', [
+                                            'class' => 'col-12',
+                                            'showLimit' => false,
+                                        ])
 
                                         <div class="col-12">
-                                            <label class="text--accent sm-text d-block fw-md mb-2" for="deliveryMethod">@lang('Delivery Methods')</label>
+                                            <label class="text--accent sm-text d-block fw-md mb-2"
+                                                for="deliveryMethod">@lang('Delivery Methods')</label>
                                             <div class="form--select-light">
-                                                <select class="form-select form--select" id="deliveryMethod" name="delivery_method" required>
+                                                <select class="form-select form--select" id="deliveryMethod"
+                                                    name="delivery_method" required>
                                                     <option value="">@lang('Select One')</option>
                                                 </select>
                                             </div>
@@ -62,7 +71,8 @@
                                                     <div class="timeline-list__content justify-content-between">
                                                         <div class="timeline-list__left">
                                                             <span class="d-block sm-text">@lang('CHARGE')
-                                                                <span class="chargeInfo" data-bs-toggle="tooltip" title="@lang('Select delivery method and input amount to view charge rate')">
+                                                                <span class="chargeInfo" data-bs-toggle="tooltip"
+                                                                    title="@lang('Select delivery method and input amount to view charge rate')">
                                                                     <i class="fa fa-info-circle"></i>
                                                                 </span>
                                                             </span>
@@ -94,7 +104,8 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn--xl btn--base w-100 btn--xl sendBtn" type="{{ auth()->user() ? 'submit' : 'button' }}">
+                                            <button class="btn btn--xl btn--base w-100 btn--xl sendBtn"
+                                                type="{{ auth()->user() ? 'submit' : 'button' }}">
                                                 @lang('Send Now')
                                             </button>
                                         </div>
@@ -114,7 +125,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">@lang('You Must Login First')</h5>
-                <button aria-label="Close" class="close btn btn--danger btn-sm close-button" data-bs-dismiss="modal" type="button">
+                <button aria-label="Close" class="close btn btn--danger btn-sm close-button" data-bs-dismiss="modal"
+                    type="button">
                     <i aria-hidden="true" class="la la-times"></i>
                 </button>
             </div>

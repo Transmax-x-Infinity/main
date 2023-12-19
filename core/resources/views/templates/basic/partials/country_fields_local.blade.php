@@ -27,11 +27,12 @@
         </small>
     @endif
 </div>
-
-<div class="{{ $class }}">
+{{-- @dd($receivingCountries); --}}
+<div class="{{ $class }} d-none">
     <div class="d-flex justify-content-between align-items-center">
         <label class="text--accent sm-text d-block fw-md mb-2" for="you-send">@lang('Recipient Gets')</label>
-        <button class="btn p-0 mb-2 reverseCountryBtn" type="button"><i class="la la-exchange-alt"></i></button>
+        <button class="btn p-0 mb-2 reverseCountryBtn" type="button" disabled><i
+                class="la la-exchange-alt"></i></button>
     </div>
 
     <div class="input-group">

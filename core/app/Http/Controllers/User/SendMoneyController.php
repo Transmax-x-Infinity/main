@@ -24,18 +24,28 @@ class SendMoneyController extends Controller
       /*
      * Return Send Money View Page
      */
-    public function sendMoney()
+    public function sendMoney($type)
     {
-    
-        $pageTitle = 'Send Money';
+        if($type == 'local'){
+            $txt = 'Localy';
+
+        }else{
+            $txt = 'Internationaly';
+        }
+        $pageTitle = 'Send Money ' . $txt;
         $sources            = SourceOfFund::active()->get();
         $purposes           = SendingPurpose::active()->get();
         $sessionData        = session()->get('send_money') ?? [];
-      
+
         $recipientCountryId = null;
         $deliveryMethodId   = null;
         $sendingCountries   = Country::active()->sending()->with('conversionRates')->get();
-        $receivingCountries = Country::receivableCountries()->get();
+        if($type == 'local'){
+            $receivingCountries = $sendingCountries;
+            // dd($receivingCountries);
+        }else{
+            $receivingCountries = Country::receivableCountries()->get();
+        }
 
 
         if ($sessionData) {
@@ -46,6 +56,8 @@ class SendMoneyController extends Controller
             $ipInfo           = json_decode(json_encode(getIpInfo()), true);
             $countryName      = @implode(',', $ipInfo['country']);
             $sendingCountryId = @$sendingCountries->where('name', $countryName)->first()->id ?? @$sendingCountries->first()->id;
+            // dd($sendingCountryId);
+
         }
 
         $todaySendMoney     = SendMoney::whereIn('status', [Status::SEND_MONEY_PENDING, Status::SEND_MONEY_COMPLETED])->where('user_id', auth()->id())->whereDate('created_at', now())->sum('base_currency_amount');
@@ -56,7 +68,12 @@ class SendMoneyController extends Controller
         $recipientAmount    = @$sessionData['recipient_amount'];
     
         session()->forget('send_money');
-        return view($this->activeTemplate . 'user.send_money.form', compact('pageTitle','recipients', 'sources', 'purposes', 'sendingAmount', 'recipientAmount', 'sendingCountryId', 'recipientCountryId', 'sendingCountries', 'receivingCountries', 'deliveryMethodId', 'todaySendMoney', 'thisMonthSendMoney'));
+        if($type == 'inter'){
+
+            return view($this->activeTemplate . 'user.send_money.form-inter', compact('pageTitle','recipients', 'sources', 'purposes', 'sendingAmount', 'recipientAmount', 'sendingCountryId', 'recipientCountryId', 'sendingCountries', 'receivingCountries', 'deliveryMethodId', 'todaySendMoney', 'thisMonthSendMoney','type'));
+        }else{
+            return view($this->activeTemplate . 'user.send_money.form-local', compact('pageTitle','recipients', 'sources', 'purposes', 'sendingAmount', 'recipientAmount', 'sendingCountryId', 'recipientCountryId', 'sendingCountries', 'receivingCountries', 'deliveryMethodId', 'todaySendMoney', 'thisMonthSendMoney','type'));
+        }
     }
 
       /*
@@ -64,6 +81,7 @@ class SendMoneyController extends Controller
      */
     public function save(Request $request)
     {
+        dd($request->all());
         
         $rules =  [
             'sending_amount'    => 'required|numeric|gt:0',

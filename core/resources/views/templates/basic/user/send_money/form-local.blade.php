@@ -8,12 +8,12 @@
             $sendingCountryId = old('sending_country');
             $recipientCountryId = old('recipient_country');
         }
-        
+
         $user = auth()->user();
     @endphp
     <section class="section section--sm">
         <div class="container">
-            <h4 class="text-center">@lang('Send Money Form')</h4>
+            <h4 class="text-center">@lang('Form') @lang($pageTitle ?? 'Send Money')</h4>
             <form action="{{ route('user.send.money.save') }}" class="card-body container-fluid register" method="post">
                 @csrf
                 <div class="row g-4">
@@ -26,16 +26,11 @@
 
                                 <div class="exchange-form">
                                     <div class="exchange-form__body p-0">
-                                        @include($activeTemplate . 'partials.country_fields', [
+                                        @include($activeTemplate . 'partials.country_fields_local', [
                                             'class' => 'mb-3',
                                             'showLimit' => true,
                                         ])
 
-                                        <div class="conversion__rate mb-5">
-                                            <div>1 <span class="sending-currency"></span> = </div>
-                                            <div class="exchange-rate ms-1"></div>
-                                            <div class="recipient-currency ms-1"></div>
-                                        </div>
 
                                         <div class=" form-group">
                                             <label class="text--accent sm-text d-block fw-md mb-2"
@@ -81,7 +76,7 @@
                                                         src="{{ getImage($activeTemplateTrue . 'images/wallet-icon.png') }}">
                                                 </span>
                                                 <span class="btn-selected__text ">
-                                                    @lang('Refunded') @lang('Wallet')
+                                                    @lang('Refunded Wallet')
                                                 </span>
                                             </span>
                                         </label>
@@ -119,7 +114,8 @@
                                         <select class="form-select form--select existings-recipient">
                                             <option value="">@lang('Select One')</option>
                                             @foreach ($recipients as $recipient)
-                                                <option  data-recipient="{{ $recipient }}">{{ $recipient->name }}</option>
+                                                <option data-recipient="{{ $recipient }}">{{ $recipient->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -152,7 +148,8 @@
                                     <label class="text--accent sm-text d-block fw-md mb-2"
                                         for="recipient_address">@lang('Recipient Address')</label>
                                     <input class="form-control form--control-textarea" id="recipient_address"
-                                        name="recipient[address]" value="{{ old('recipient')['address'] ?? null }}" required>
+                                        name="recipient[address]" value="{{ old('recipient')['address'] ?? null }}"
+                                        required>
                                 </div>
 
                                 <div class="form-group">
@@ -212,12 +209,12 @@
                                         <li>
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <span class="d-block sm-text">
-                                                    @lang('Payable In '){{ __($general->cur_text) }}
+                                                    @lang('Payable In') {{ __($general->cur_text) }}
                                                 </span>
                                                 <h5 class="text--base sm-text m-0">
                                                     <span class="base-amount-text"></span>
                                                     <span class="base-send-cur">{{ __($general->cur_text) }}</span>
-                                                    
+
                                                 </h5>
                                             </div>
                                         </li>
@@ -336,8 +333,8 @@
         let isAgent = false;
     </script>
 
-    <script src="{{ asset('assets/global/js/sendMoney.js') }}"></script>
-<script>
+    <script src="{{ asset('assets/global/js/sendMoneyLocal.js') }}"></script>
+    <script>
         (function($) {
             "use strict";
 
@@ -489,7 +486,7 @@
                 $('.directPayment').click();
             @endif
 
-        
+
 
             $('.existings-recipient').on('change', function() {
 
